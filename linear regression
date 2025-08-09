@@ -1,0 +1,27 @@
+from sklearn.linear_model import LinearRegression
+from sklearn import metrics
+import numpy as np
+
+# Model 4: Linear Regression
+model4 = LinearRegression()
+model4.fit(train_x, train_y)
+
+# Predictions for Model 4
+predict_y_model4 = model4.predict(train_x)
+
+# Evaluation Metrics for Linear Regression
+print("Evaluation Metrics for Model 4 (Linear Regression):\n")
+
+# R squared error
+score_model4_1 = metrics.r2_score(train_y, predict_y_model4)
+print(f"R squared error: {score_model4_1}")
+
+# Mean Absolute Error
+score_model4_2 = metrics.mean_absolute_error(train_y, predict_y_model4)
+print(f"Mean Absolute Error (MAE): {score_model4_2}")
+
+# Additional Metrics
+print(f"Mean Squared Error (MSE): {metrics.mean_squared_error(train_y, predict_y_model4)}")
+print(f"Root Mean Squared Error (RMSE): {np.sqrt(metrics.mean_squared_error(train_y, predict_y_model4))}")
+print(f"Mean Absolute Percentage Error (MAPE): {metrics.mean_absolute_percentage_error(train_y, predict_y_model4)}")
+print(f"Explained Variance Score (EVS): {metrics.explained_variance_score(train_y, predict_y_model4)}")

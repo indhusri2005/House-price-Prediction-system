@@ -1,0 +1,118 @@
+# 13300000	7420	4	2	3	yes	no	no	no	yes	2	yes	furnished
+# 1750000	3850	3	1	2	yes	no	no	no	no	0	no	unfurnished
+
+
+input_data = (7420, 4, 2, 3, 1, 0, 0, 0, 1, 2, 1, 2)
+
+#changing input data as numpy array
+input_data_numpy = np.asarray(input_data)
+
+#reshaping the array because if we don't the model thinks we will provide 543 data but we are provided only 1 and so we need to reshape for one instance.
+input_data_numpy_reshape = input_data_numpy.reshape(1,-1)
+
+#standardise the input data
+std_data  = scalar.transform(input_data_numpy_reshape)
+
+
+
+prediction2 = model2.predict(std_data)
+print("Using Random Forest Regresor prediction is : ", prediction2)
+
+prediction3 = model3.predict(std_data)
+print("Using XGBoost prediction is : ", prediction3)
+# For Linear Regression (model4)
+prediction4 = model4.predict(std_data)
+print("Using Linear Regression prediction is: ", prediction4)
+
+# For Decision Tree Regressor (model5)
+prediction5 = model5.predict(std_data)
+print("Using Decision Tree Regressor prediction is: ", prediction5)
+
+# For K-Nearest Neighbors Regressor (model6)
+prediction6 = model6.predict(std_data)
+print("Using K-Nearest Neighbors Regressor prediction is: ", prediction6)
+import matplotlib.pyplot as plt
+
+# Model names
+models = ["Random Forest", "XGBoost", "Linear Regression", "Decision Tree", "KNN"]
+
+# Metrics for all models
+mae_scores = [
+    339096.9835626911,   # Random Forest
+    54630.20212155963,   # XGBoost
+    799720.1026620996,   # Linear Regression
+    7706.422018348624,   # Decision Tree
+    691418.8348623853    # KNN
+]
+r2_scores = [
+    0.9455469086918079, # Random Forest
+   0.9973854422569275,  # XGBoost
+    0.6809987305547798,  # Linear Regression
+    0.9987710396955115,  # Decision Tree
+    0.7428764076044969   # KNN
+]
+mse_scores = [
+    248883938266.2781,   # Random Forest
+    9527846046.564758,   # XGBoost
+    1162498690718.857,   # Linear Regression
+    4478555045.87156,    # Decision Tree
+    937005172526.5321    # KNN
+]
+
+rmse_scores = [
+    498882.68988438364,  # Random Forest
+    97610.68612895187,   # XGBoost
+    1078192.3254776287,  # Linear Regression
+    66922.00718651197,   # Decision Tree
+    967990.2750165067    # KNN
+]
+
+mape_scores = [
+    0.07485832931837239,  # Random Forest
+    0.014659538455132768, # XGBoost
+    0.17756869575148593,  # Linear Regression
+    0.002971382615299443, # Decision Tree
+    0.15074045019892232   # KNN
+]
+
+evs_scores = [
+    0.9317047966847205,  # Random Forest
+    0.9973854656686468,  # XGBoost
+    0.6809987305547798,  # Linear Regression
+    0.9987710396955115,  # Decision Tree
+    0.7437797197216879   # KNN
+]
+
+# Plotting all metrics as subplots
+fig, axes = plt.subplots(3, 2, figsize=(15, 12))
+fig.suptitle("Model Evaluation Metrics Comparison", fontsize=16)
+
+# Bar plot for each metric
+metrics = [
+    ("R-squared (Accuracy)", r2_scores),
+    ("Mean Absolute Error (MAE)", mae_scores),
+    ("Mean Squared Error (MSE)", mse_scores),
+    ("Root Mean Squared Error (RMSE)", rmse_scores),
+    ("Mean Absolute Percentage Error (MAPE)", mape_scores),
+    ("Explained Variance Score (EVS)", evs_scores)
+]
+
+colors = ['blue', 'green', 'orange', 'purple', 'red']
+
+for ax, (metric_name, values) in zip(axes.flatten(), metrics):
+    bars = ax.bar(models, values, color=colors)
+    ax.set_title(metric_name, fontsize=14)
+    ax.set_ylabel(metric_name, fontsize=12)
+    ax.set_xticks(range(len(models)))
+    ax.set_xticklabels(models, rotation=15, fontsize=10)
+    ax.grid(axis='y', linestyle='--', alpha=0.7)
+    for bar in bars:
+        ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height(), 
+                f"{bar.get_height():.3f}", ha='center', va='bottom', fontsize=9, color='black')
+
+# Adjust layout
+plt.tight_layout(rect=[0, 0.03, 1, 0.95])
+plt.show()
+
+
+

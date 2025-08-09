@@ -1,0 +1,28 @@
+from sklearn.neighbors import KNeighborsRegressor
+from sklearn import metrics
+import numpy as np
+
+# Model 6: K-Nearest Neighbors Regressor
+model6 = KNeighborsRegressor(n_neighbors=5)
+model6.fit(train_x, train_y)
+
+# Predictions for Model 6
+predict_y_model6 = model6.predict(train_x)
+
+# Evaluation Metrics for K-Nearest Neighbors Regressor
+print("Evaluation Metrics for Model 6 (K-Nearest Neighbors Regressor):\n")
+
+# R squared error
+score_model6_1 = metrics.r2_score(train_y, predict_y_model6)
+print(f"R squared error: {score_model6_1}")
+
+# Mean Absolute Error
+score_model6_2 = metrics.mean_absolute_error(train_y, predict_y_model6)
+print(f"Mean Absolute Error (MAE): {score_model6_2}")
+
+# Additional Metrics
+print(f"Mean Squared Error (MSE): {metrics.mean_squared_error(train_y, predict_y_model6)}")
+print(f"Root Mean Squared Error (RMSE): {np.sqrt(metrics.mean_squared_error(train_y, predict_y_model6))}")
+print(f"Mean Absolute Percentage Error (MAPE): {metrics.mean_absolute_percentage_error(train_y, predict_y_model6)}")
+print(f"Explained Variance Score (EVS): {metrics.explained_variance_score(train_y, predict_y_model6)}")
+

@@ -1,0 +1,24 @@
+# Model 1: XGBoost Regressor
+model1 = XGBRegressor()
+model1.fit(train_x, train_y)
+
+# Predictions for Model 1
+predict_y_model1 = model1.predict(train_x)
+
+# Evaluation Metrics for Model 1
+print("Evaluation Metrics for Model 1 (XGBoost Regressor):\n")
+
+# R squared error
+score_model1_1 = metrics.r2_score(train_y, predict_y_model1)
+print(f"R squared error: {score_model1_1}")
+
+# Mean Absolute Error
+score_model1_2 = metrics.mean_absolute_error(train_y, predict_y_model1)
+print(f"Mean Absolute Error (MAE): {score_model1_2}")
+
+# Additional Metrics
+print(f"Mean Squared Error (MSE): {mean_squared_error(train_y, predict_y_model1)}")
+print(f"Root Mean Squared Error (RMSE): {np.sqrt(mean_squared_error(train_y, predict_y_model1))}")
+print(f"Mean Absolute Percentage Error (MAPE): {mean_absolute_percentage_error(train_y, predict_y_model1)}")
+print(f"Explained Variance Score (EVS): {explained_variance_score(train_y, predict_y_model1)}")
+print(f"R-squared (R2): {r2_score(train_y, predict_y_model1)}")

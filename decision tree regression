@@ -1,0 +1,27 @@
+from sklearn.tree import DecisionTreeRegressor
+from sklearn import metrics
+import numpy as np
+
+# Model 5: Decision Tree Regressor
+model5 = DecisionTreeRegressor(random_state=8)
+model5.fit(train_x, train_y)
+
+# Predictions for Model 5
+predict_y_model5 = model5.predict(train_x)
+
+# Evaluation Metrics for Decision Tree Regressor
+print("Evaluation Metrics for Model 5 (Decision Tree Regressor):\n")
+
+# R squared error
+score_model5_1 = metrics.r2_score(train_y, predict_y_model5)
+print(f"R squared error: {score_model5_1}")
+
+# Mean Absolute Error
+score_model5_2 = metrics.mean_absolute_error(train_y, predict_y_model5)
+print(f"Mean Absolute Error (MAE): {score_model5_2}")
+
+# Additional Metrics
+print(f"Mean Squared Error (MSE): {metrics.mean_squared_error(train_y, predict_y_model5)}")
+print(f"Root Mean Squared Error (RMSE): {np.sqrt(metrics.mean_squared_error(train_y, predict_y_model5))}")
+print(f"Mean Absolute Percentage Error (MAPE): {metrics.mean_absolute_percentage_error(train_y, predict_y_model5)}")
+print(f"Explained Variance Score (EVS): {metrics.explained_variance_score(train_y, predict_y_model5)}")

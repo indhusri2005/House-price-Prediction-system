@@ -1,0 +1,46 @@
+import pickle
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import OrdinalEncoder
+
+from sklearn.model_selection import train_test_split
+
+from sklearn.ensemble import RandomForestRegressor
+from xgboost import XGBRegressor
+
+from sklearn.metrics import mean_squared_error
+from sklearn import metrics
+dataframe =  pd.read_csv('C:/Users/Indhu/OneDrive/Documents/Housing.csv')
+
+# printing first 5 columns
+print(dataframe.head())
+
+# printing the dimensions of the dataframe
+print(dataframe.shape)
+
+# Checking for missing values
+print(dataframe.isnull().sum())
+
+#data info
+print(dataframe.info())
+label_encoder = LabelEncoder()
+ordinal_encoder = OrdinalEncoder(categories=[['unfurnished','semi-furnished','furnished']])
+dataframe['mainroad'] = label_encoder.fit_transform(dataframe['mainroad'])
+dataframe['guestroom'] = label_encoder.fit_transform(dataframe['guestroom'])
+dataframe['basement'] = label_encoder.fit_transform(dataframe['basement'])
+dataframe['hotwaterheating'] = label_encoder.fit_transform(dataframe['hotwaterheating'])
+dataframe['airconditioning'] = label_encoder.fit_transform(dataframe['airconditioning'])
+dataframe['prefarea'] = label_encoder.fit_transform(dataframe['prefarea'])
+dataframe['furnishingstatus'] = ordinal_encoder.fit_transform(dataframe[['furnishingstatus']])
+X = dataframe.drop(['price'],axis=1)
+Y = dataframe["price"]
+train_x, test_x, train_y, test_y = train_test_split(X,Y,test_size=0.2,random_state=0)
+scalar = StandardScaler()
+scalar.fit(train_x)
+train_x = scalar.transform(train_x)
+test_x = scalar.transform(test_x)
